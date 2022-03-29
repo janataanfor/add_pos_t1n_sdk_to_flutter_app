@@ -52,12 +52,17 @@ class MainActivity: FlutterActivity() {
             map[Utils.KEY_TYPEFACE] = 1
             map[Utils.KEY_TEXTSIZE] = "30".toInt()
 
-        return try {
+        ThreadPoolManager.getInstance().executeTask {
+            //print text
             DMPrinterManager.printTextApi("test printing",map)
-            1
-        }catch (e: Exception){
-            -1
+            //The paper length after printing.
+            DMPrinterManager.wrapPaperApi(22)
+            //Cut paper after printing. Mini device does not support
+            DMPrinterManager.cutPaper()
         }
+
+        return 1
+
     }
 
 }
